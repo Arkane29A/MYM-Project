@@ -1,0 +1,44 @@
+body
+{
+    background-color: #DAF5FF;
+}
+
+#title
+{
+    text-align: center;
+    position: relative;
+    padding-top: 20px;
+
+    font-size: 60px;
+}
+
+#email{
+
+    transition: all 0.2s ease;
+    cursor: pointer;
+
+
+}
+
+
+#email:hover {
+
+    /* box-shadow: 1px 1px 1px 1px #e9ecef; */
+    transform: scale(1.04);
+}
+
+#password {
+
+    transition: all 0.2s ease;
+    cursor: pointer;
+
+
+}
+
+
+#password:hover {
+
+    /* box-shadow: 1px 1px 1px 1px #e9ecef; */
+    transform: scale(1.04);
+}
+
