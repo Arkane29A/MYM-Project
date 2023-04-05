@@ -21,3 +21,10 @@ const UserSchema = new Schema({
 const User = mongoose.model('Users', UserSchema)
 
 module.exports = User;
+
+
+// e.preventDefault();
+// $.get('/partials/main.ejs', function(data) {
+//   $('#partial-container').html(data);
+// }).done(function() {
+//   $('#partial-container').siblings().remove();

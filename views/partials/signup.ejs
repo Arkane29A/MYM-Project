@@ -14,29 +14,36 @@
                 <h2 class="fw-bold mb-2 text-uppercase">Create a new account below!</h2>
                 <p class="text-white-50 mb-5">Enter your credentials below</p>
   
+                <!-- start -->
+
+                <form action="/register" method="POST">
                 <div class="form-outline form-white mb-4" id="email">
-                  <input type="email" id="typeEmailX" class="form-control form-control-lg" />
-                  <label class="form-label" for="typeEmailX">Email</label>
+                  <input type="email" id="signupemail" class="form-control form-control-lg" name="email" />
+                  <label class="form-label" for="signupemail">Email</label>
                 </div>
   
                 <div class="form-outline form-white mb-4" id="password">
-                  <input type="password" id="typePasswordX" class="form-control form-control-lg" />
-                  <label class="form-label" for="typePasswordX">Password</label>
+                  <input type="password" id="signuppassword" class="form-control form-control-lg" name="password" />
+                  <label class="form-label" for="signuppassword">Password</label>
                 </div>
 
                 <div class="form-outline form-white mb-4" id="password">
-                  <input type="password" id="typePasswordX" class="form-control form-control-lg" />
-                  <label class="form-label" for="typePasswordX">Confirm Password</label>
+                  <input type="password" id="confirmsignuppassword" class="form-control form-control-lg" name="confirmpassword" />
+                  <label class="form-label" for="confirmsignuppassword">Confirm Password</label>
                 </div>
-  
+
+                <!-- end -->
                 <p class="small mb-5 pb-lg-2"><a class="text-white-50" href="#!">Forgot password?</a></p>
   
-                <button id="login" class="btn btn-outline-light btn-lg px-5" type="submit">Sign up</button >
+                <button id="signupbutton" class="btn btn-outline-light btn-lg px-5" type="submit">Sign up</button >
   
               </div>
+
+            </form>
+
   
               <div>
-                <p class="mb-0">Already have an account? <a id="login-link" href="#!" class="text-white-50 fw-bold">Login here </a>
+                <p class="mb-0">Already have an account? <a id="login-link" href="" class="text-white-50 fw-bold">Login here </a>
                 </p>
               </div>
   
@@ -45,4 +52,19 @@
         </div>
       </div>
     </div>
+
+
+
+
+
+  <script>
+      $('#login-link').click(function(e) {
+          e.preventDefault();
+          $.get('/partials/login.ejs', function(data) {
+            $('#partial-container').html(data);
+          }).done(function() {
+            $('#partial-container').siblings().remove();
+          })});
+  </script>
+
   </section>
