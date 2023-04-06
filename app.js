@@ -1,10 +1,12 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const User = require('./models/User')
-
+const passport = require('passport');
 const app = express();
 const axios = require('axios');
-
+const cookieSession = require('cookie-session');
+const googleauth = require('./auth');
+const session = require('express-session');
 
 app.set('view engine', 'ejs');
 
@@ -21,16 +23,20 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
 app.use(express.static('views'));
 app.use(express.urlencoded({ extended: true }));
 
-const passport = require('passport');
+// For an actual app you should configure this with an experation time, better keys, proxy and secure
+app.use(cookieSession({
+  name: 'tuto-session',
+  keys: ['key1', 'key2']
+}))
 
-const googleauth = require('./auth');
-
-
-app.get('auth/google',
-
-  passport.authenticate('google', {scope: ['email', 'profile']})
-
-)
+// Auth middleware that checks if the user is logged in
+const isLoggedIn = (req, res, next) => {
+  if (req.user) {
+      next();
+  } else {
+      res.sendStatus(401);
+  }
+}
 
 
 //retrives the image from nasa
@@ -63,7 +69,9 @@ app.get('/main', async (req, res) => {
   
 //main page
 app.get('/', (req, res) => {
-  res.render('index');
+  const errorMessage = req.query.error;
+  const successMessage = "";
+  res.render('index', { errorMessage, successMessage });
 });
 
 //registering an account
@@ -91,8 +99,9 @@ app.post("/register", (req, res) => {
 
         newUser.save()
           .then(() => {
-            res.redirect('/');
-          })
+            const successMessage = "New User created";
+            const errorMessage = "";
+            res.render('index', { successMessage, errorMessage });          })
           .catch((err) => {
             console.log(err);
             res.redirect('/');
@@ -104,21 +113,32 @@ app.post("/register", (req, res) => {
         console.log("Must contain at least one digit ");
         console.log("Must contain at least one of the special characters ");
         console.log("Must be at least 8 characters long");
-        res.redirect('/');
+        const errorMessage = "Must contain at least one lowercase letter \n"+
+        "Must contain at least one uppercase letter \n"+ 
+        "Must contain at least one digit \n"+
+        "Must contain at least one of the special characters \n" +
+        "Must be at least 8 characters long";
+        const successMessage = "";
+
+
+                res.render('index', { errorMessage, successMessage });        
       }
     } else {
       console.log("Password is not the same. DENIED");
-      res.redirect('/');
+      const errorMessage = "Ensure the Password is the same";
+      const successMessage = "";
+
+      res.render('index', { errorMessage, successMessage });
     }
   } else {
-    console.log("Invalid email format. DENIED");
-    res.redirect('/');
+      const errorMessage = "Invalid email address";
+      const successMessage = "";
+
+      res.render('index', { errorMessage, successMessage });;
   }
 });
 
-// app.get('/partials/main', (req, res) => {
-//   res.render('main');
-// });
+
 
 app.get("/login", (req, res) => {
   const username = req.query.loginemail;
@@ -133,13 +153,41 @@ app.get("/login", (req, res) => {
 
       } else {
         console.log("Incorrect username or password");
-        res.redirect('/');
-      }
+        const errorMessage = "Incorrect username or password";
+        const successMessage = "";
+  
+        res.render('index', { errorMessage, successMessage });      }
     })
     .catch((err) => {
       console.log(err);
       res.redirect('/');
     });
+});
+
+// Initializes passport and passport sessions
+app.use(passport.initialize());
+app.use(passport.session());
+
+// app.get('/good', isLoggedIn, (req, res) => res.send(`Welcome mr ${req.user.displayName}!`))
+
+// Auth Routes
+app.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+app.get('/google/callback', passport.authenticate('google', { failureRedirect: '/failed' }),
+  function(req, res) {
+    // Successful authentication, redirect home.
+    res.redirect('/main');
+  }
+);
+
+
+
+
+app.get('/logout', (request, response) =>{
+
+    request.session = null;
+    request.logout();
+    response.redirect('/')
+
 });
 
 //404 page

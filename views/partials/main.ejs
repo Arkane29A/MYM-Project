@@ -15,17 +15,52 @@
 
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js" integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous"></script>
+
 
 </head>
 <body>
 
-    <div id="partial-container">
-        <img src="<%= imageUrl %>" alt="NASA Astronomy Picture of the Day">
-      </div>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-dark">
+    
+    <img src="https://mystickermania.com/cdn/stickers/cute-cats/sticker_3215-512x512.png" alt="Profile Picture" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 5px;">
+
+    <button onclick="logout()"type="button" class="btn btn-dark">Log out</button>
+
+</nav>
+
+
+
+
+    <div id="nasainfo">
+        <img src="<%= imageUrl %>" alt="NASA Astronomy Picture of the Day" id="nasaimage">
       
 
-      <h1><%= imageinfo %></h1>
+      <h1 id="nasatext"><%= imageinfo %></h1>
+    </div>
 
   </body>
+
+
+  <script>
+    function logout() {
+      fetch('/logout', {
+        method: 'GET'
+      })
+      .then(response => {
+        if (response.ok) {
+          // Redirect to homepage after successful logout
+          window.location.href = '/';
+        } else {
+          // Handle error response
+        }
+      })
+      .catch(error => {
+        // Handle network error
+      });
+    }
+  </script>
 
   </html>

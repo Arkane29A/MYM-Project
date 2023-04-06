@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const findOrCreate = require("mongoose-findorcreate");
 
 const Schema = mongoose.Schema; 
 
@@ -18,8 +19,9 @@ const UserSchema = new Schema({
 
 }, {timestamps: true});
 
-const User = mongoose.model('Users', UserSchema)
 
+UserSchema.plugin(findOrCreate);
+const User = mongoose.model('Users', UserSchema)
 module.exports = User;
 
 

@@ -1,9 +1,15 @@
-<section class="vh-100 gradient-custom">
+<section id="loginsection">
+<div id id="titleandlogo">
+  <h1 id="title">Nasa Daily</h1>
+  <img src="https://mystickermania.com/cdn/stickers/cute-cats/sticker_3215-512x512.png" alt="" id="spacecat">
+
+</div>
 
 
-    <div class="container py-5 h-100">
+    <div class="container  ">
 
-      <div class="row d-flex justify-content-center align-items-center h-100">
+
+      <div class="container py-5 h-100 row d-flex justify-content-center align-items-center h-100">
 
         <div class="col-12 col-md-8 col-lg-6 col-xl-5">
           <div class="card bg-dark text-white" style="border-radius: 1rem;">
@@ -35,7 +41,7 @@
   
             </form>
 
-            <a href="/auth/google" class="btn btn-light">
+            <a href="google" class="btn btn-light">
               <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google Logo" style="float:left;width:20px;height:20px;margin-top: 2px;">
               <span class="fa fa-google"></span>  &nbsp; Sign In with Google
             </a>
@@ -78,5 +84,55 @@
       </script>
 
 
+<% if (errorMessage) { %>
+  <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="errorModalLabel">Error</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <%= errorMessage.replace(/\n/g, "<br>") %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  $(document).ready(function() {
+    $('#errorModal').modal('show');
+  });
+</script>
+<% } %>
 
-  </section>
+
+<% if (successMessage) { %>
+  <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="sucessModalLabel">Success</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <%= successMessage %>
+      </div>
+
+    </div>
+  </div>
+</div>
+<script>
+  $(document).ready(function() {
+    $('#successModal').modal('show');
+  });
+</script>
+<% } %>
+
+</section>
