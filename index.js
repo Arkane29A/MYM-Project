@@ -102,7 +102,7 @@ app.get('/main', async (req, res) => {
 app.get('/', (req, res) => {
   const errorMessage = req.query.error;
   const successMessage = "";
-  res.render('start', { errorMessage, successMessage });
+  res.render('static/views/start', { errorMessage, successMessage });
 });
 
 //registering an account
