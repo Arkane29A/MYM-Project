@@ -194,3 +194,5 @@ index.get('/logout', (request, response) =>{
 index.use((req, res) => {
   res.status(404).send("<p>Error, page not found<p/>");
 });
+
+export default app;
