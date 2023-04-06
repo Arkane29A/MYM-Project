@@ -38,7 +38,7 @@ app.get('/api/item/:slug', (req, res) => {
 
 
 app.set('view engine', 'ejs');
-app.use(express.static('views'));
+app.set('views', './views');
 
 
 //connecting to mongo database and listening for port 3000
@@ -102,7 +102,7 @@ app.get('/main', async (req, res) => {
 app.get('/', (req, res) => {
   const errorMessage = req.query.error;
   const successMessage = "";
-  res.render('./start', { errorMessage, successMessage });
+  res.render('start', { errorMessage, successMessage });
 });
 
 //registering an account
