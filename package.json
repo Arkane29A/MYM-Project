@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Nasa Daily Image application",
   "main": "index.js",
-  
   "engines": {
     "node": "14.x"
   },
@@ -22,8 +21,13 @@
     "mongoose": "^7.0.3",
     "mongoose-findorcreate": "^4.0.0",
     "passport": "^0.5.3",
-    "passport-google-oauth20": "^2.0.0"
+    "passport-google-oauth20": "^2.0.0",
+    "vercel": "^28.18.3"
   },
-
-  "rewrites": [{ "source": "/(.*)", "destination": "/" }]
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/"
+    }
+  ]
 }
