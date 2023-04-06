@@ -2,13 +2,13 @@ const express = require('express');
 const mongoose = require('mongoose');
 const User = require('./models/User')
 const passport = require('passport');
-const app = express();
+const index = express();
 const axios = require('axios');
 const cookieSession = require('cookie-session');
 const googleauth = require('./auth');
 const session = require('express-session');
 
-app.set('view engine', 'ejs');
+index.set('view engine', 'ejs');
 
 //connecting to mongo database and listening for port 3000
 const dbURI = 'mongodb+srv://saadhzahid:saadh123@mymcluster.jtrlzq1.mongodb.net/MYMCluster?retryWrites=true&w=majority';
@@ -16,15 +16,15 @@ const dbURI = 'mongodb+srv://saadhzahid:saadh123@mymcluster.jtrlzq1.mongodb.net/
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     console.log("Connected to database");
-    app.listen(3000);
+    index.listen(3000);
   })
   .catch((err) => console.log(err));
 
-app.use(express.static('views'));
-app.use(express.urlencoded({ extended: true }));
+index.use(express.static('views'));
+index.use(express.urlencoded({ extended: true }));
 
-// For an actual app you should configure this with an experation time, better keys, proxy and secure
-app.use(cookieSession({
+// For an actual index you should configure this with an experation time, better keys, proxy and secure
+index.use(cookieSession({
   name: 'tuto-session',
   keys: ['key1', 'key2']
 }))
@@ -40,7 +40,7 @@ const isLoggedIn = (req, res, next) => {
 
 
 //retrives the image from nasa
-app.get('/main', async (req, res) => {
+index.get('/main', async (req, res) => {
     try {
       // fetch the data for the Astronomy Picture of the Day
       const response = await axios.get('https://api.nasa.gov/planetary/apod?api_key=0nfWdzCXRidY0ch0EaTCryJz9DRg9Y9PH7d1pKcD');
@@ -54,7 +54,7 @@ app.get('/main', async (req, res) => {
         const imageUrl = response.data.url;
         const imageinfo = response.data.title;
   
-        // render the index.ejs template and pass the image URL as a variable
+        // render the start.ejs template and pass the image URL as a variable
         res.render('partials/main', { imageUrl, imageinfo });
     } else {
         console.error(response.statusText);
@@ -68,14 +68,14 @@ app.get('/main', async (req, res) => {
 
   
 //main page
-app.get('/', (req, res) => {
+index.get('/', (req, res) => {
   const errorMessage = req.query.error;
   const successMessage = "";
-  res.render('index', { errorMessage, successMessage });
+  res.render('start', { errorMessage, successMessage });
 });
 
 //registering an account
-app.post("/register", (req, res) => {
+index.post("/register", (req, res) => {
   const username = req.body.email;
   const password = req.body.password;
   const confirmPassword = req.body.confirmpassword;
@@ -101,7 +101,7 @@ app.post("/register", (req, res) => {
           .then(() => {
             const successMessage = "New User created";
             const errorMessage = "";
-            res.render('index', { successMessage, errorMessage });          })
+            res.render('start', { successMessage, errorMessage });          })
           .catch((err) => {
             console.log(err);
             res.redirect('/');
@@ -121,26 +121,26 @@ app.post("/register", (req, res) => {
         const successMessage = "";
 
 
-                res.render('index', { errorMessage, successMessage });        
+                res.render('start', { errorMessage, successMessage });        
       }
     } else {
       console.log("Password is not the same. DENIED");
       const errorMessage = "Ensure the Password is the same";
       const successMessage = "";
 
-      res.render('index', { errorMessage, successMessage });
+      res.render('start', { errorMessage, successMessage });
     }
   } else {
       const errorMessage = "Invalid email address";
       const successMessage = "";
 
-      res.render('index', { errorMessage, successMessage });;
+      res.render('start', { errorMessage, successMessage });;
   }
 });
 
 
 
-app.get("/login", (req, res) => {
+index.get("/login", (req, res) => {
   const username = req.query.loginemail;
   const password = req.query.loginpassword;
 
@@ -156,7 +156,7 @@ app.get("/login", (req, res) => {
         const errorMessage = "Incorrect username or password";
         const successMessage = "";
   
-        res.render('index', { errorMessage, successMessage });      }
+        res.render('start', { errorMessage, successMessage });      }
     })
     .catch((err) => {
       console.log(err);
@@ -165,14 +165,14 @@ app.get("/login", (req, res) => {
 });
 
 // Initializes passport and passport sessions
-app.use(passport.initialize());
-app.use(passport.session());
+index.use(passport.initialize());
+index.use(passport.session());
 
-// app.get('/good', isLoggedIn, (req, res) => res.send(`Welcome mr ${req.user.displayName}!`))
+// index.get('/good', isLoggedIn, (req, res) => res.send(`Welcome mr ${req.user.displayName}!`))
 
 // Auth Routes
-app.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
-app.get('/google/callback', passport.authenticate('google', { failureRedirect: '/failed' }),
+index.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+index.get('/google/callback', passport.authenticate('google', { failureRedirect: '/failed' }),
   function(req, res) {
     // Successful authentication, redirect home.
     res.redirect('/main');
@@ -182,7 +182,7 @@ app.get('/google/callback', passport.authenticate('google', { failureRedirect: '
 
 
 
-app.get('/logout', (request, response) =>{
+index.get('/logout', (request, response) =>{
 
     request.session = null;
     request.logout();
@@ -191,6 +191,6 @@ app.get('/logout', (request, response) =>{
 });
 
 //404 page
-app.use((req, res) => {
+index.use((req, res) => {
   res.status(404).send("<p>Error, page not found<p/>");
 });
