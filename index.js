@@ -9,33 +9,8 @@ const axios = require('axios');
 const cookieSession = require('cookie-session');
 const googleauth = require('./auth');
 const session = require('express-session');
-const { v4 } = require('uuid');
 
-const port = process.env.PORT || 3000;
-
-app.get('/api', (req, res) => {
-  const path = `/api/item/${v4()}`;
-  res.setHeader('Content-Type', 'text/html');
-  res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
-  res.end(`Hello! Go to item: <a href="${path}">${path}</a>`);
-});
-
-app.get('/api/item/:slug', (req, res) => {
-  const { slug } = req.params;
-  res.end(`Item: ${slug}`);
-});
-app.get('/api', (req, res) => {
-  const path = `/api/item/${v4()}`;
-  res.setHeader('Content-Type', 'text/html');
-  res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
-  res.end(`Hello! Go to item: <a href="${path}">${path}</a>`);
-});
-
-app.get('/api/item/:slug', (req, res) => {
-  const { slug } = req.params;
-  res.end(`Item: ${slug}`);
-});
-
+app.use(express.static('views'));
 
 
 
@@ -49,7 +24,7 @@ const dbURI = 'mongodb+srv://saadhzahid:saadh123@mymcluster.jtrlzq1.mongodb.net/
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     console.log("Connected to database");
-    app.listen(${port});
+    app.listen(3000);
   })
   .catch((err) => console.log(err));
 
