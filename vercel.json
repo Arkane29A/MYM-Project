@@ -2,15 +2,24 @@
   "version": 2,
   "builds": [
     {
-      "src": "index.js",
+      "src": "./index.js",
       "use": "@vercel/node"
     },
     {
-      "src": "views/**/*",
-      "use": "@vercel/static"
+      "src": "./views/**.ejs",
+      "use": "npm:ejs-cli@latest",
+      "config": {
+        "outputDir": "./views",
+        "compileDebug": false,
+        "delimiter": "%"
+      }
     }
   ],
   "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "index.js"
+    },
     {
       "src": "/(.*)",
       "dest": "/"

@@ -11,6 +11,8 @@ const googleauth = require('./auth');
 const session = require('express-session');
 const { v4 } = require('uuid');
 
+const port = process.env.PORT || 3000;
+
 app.get('/api', (req, res) => {
   const path = `/api/item/${v4()}`;
   res.setHeader('Content-Type', 'text/html');
@@ -47,11 +49,10 @@ const dbURI = 'mongodb+srv://saadhzahid:saadh123@mymcluster.jtrlzq1.mongodb.net/
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     console.log("Connected to database");
-    app.listen(3000);
+    app.listen(${port});
   })
   .catch((err) => console.log(err));
 
-app.use(express.static('views'));
 app.use(express.urlencoded({ extended: true }));
 
 // For an actual app you should configure this with an experation time, better keys, proxy and secure
