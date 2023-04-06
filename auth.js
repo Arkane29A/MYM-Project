@@ -6,7 +6,7 @@ const findOrCreate = require("mongoose-findorcreate");
 const GoogleUser = require('./models/Googleuser');
 
 
-const GOOGLE_CLIENT_ID = '635637600100-fppc3uj5egjbq2fdfk1n9p132gan6o5f.indexs.googleusercontent.com';
+const GOOGLE_CLIENT_ID = '635637600100-fppc3uj5egjbq2fdfk1n9p132gan6o5f.apps.googleusercontent.com';
 const GOOGLE_CLIENT_SECRET = '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';
 
 
