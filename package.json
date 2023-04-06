@@ -7,8 +7,9 @@
     "node": "18.x"
   },
   "scripts": {
-    "start": "index.js",
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
+
   },
   "author": "Saadh Zahid",
   "license": "ISC",

@@ -9,7 +9,6 @@ const axios = require('axios');
 const cookieSession = require('cookie-session');
 const googleauth = require('./auth');
 const session = require('express-session');
-const { v4 } = require('uuid');
 
 app.get('/api', (req, res) => {
   const path = `/api/item/${v4()}`;
