@@ -38,6 +38,8 @@ app.get('/api/item/:slug', (req, res) => {
 
 
 app.set('view engine', 'ejs');
+app.use(express.static('views'));
+
 
 //connecting to mongo database and listening for port 3000
 const dbURI = 'mongodb+srv://saadhzahid:saadh123@mymcluster.jtrlzq1.mongodb.net/MYMCluster?retryWrites=true&w=majority';
