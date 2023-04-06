@@ -9,7 +9,6 @@
   "scripts": {
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
-
   },
   "author": "Saadh Zahid",
   "license": "ISC",
@@ -23,6 +22,7 @@
     "mongoose-findorcreate": "^4.0.0",
     "passport": "^0.5.3",
     "passport-google-oauth20": "^2.0.0",
+    "uuid": "^9.0.0",
     "vercel": "^28.18.3"
   },
   "rewrites": [
