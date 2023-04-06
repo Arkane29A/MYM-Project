@@ -115,16 +115,15 @@ app.post("/register", (req, res) => {
           });
       } else {
         //password doesn't fit requirements
-        console.log("Must contain at least one lowercase letter ");
-        console.log("Must contain at least one uppercase letter ");
-        console.log("Must contain at least one digit ");
-        console.log("Must contain at least one of the special characters ");
-        console.log("Must be at least 8 characters long");
-        const errorMessage = "Must contain at least one lowercase letter \n"+
-        "Must contain at least one uppercase letter \n"+ 
-        "Must contain at least one digit \n"+
-        "Must contain at least one of the special characters \n" +
-        "Must be at least 8 characters long";
+
+        const errorMessage = "Your password: \n" +  "-Must contain at least one lowercase letter \n"+
+        "-Must contain at least one uppercase letter \n"+ 
+        "-Must contain at least one digit \n"+
+        "-Must contain at least one of the special characters \n" +
+        "-Must be at least 8 characters long";
+
+        console.log(errorMessage);
+
         const successMessage = "";
 
 
