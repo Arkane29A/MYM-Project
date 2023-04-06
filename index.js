@@ -1,6 +1,8 @@
 const express = require('express');
+const path = require('path');
+
 const mongoose = require('mongoose');
-const User = require('./models/User')
+const User = require(path.join(__dirname, 'models', 'User'));
 const passport = require('passport');
 const app = express();
 const axios = require('axios');
